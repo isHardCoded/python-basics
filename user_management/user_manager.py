@@ -1,4 +1,4 @@
-import random
+from random import choices
 from string import digits
 
 def list_users(users: list):
@@ -18,13 +18,9 @@ def add_user(users: list, name, age):
     print("Некорректный возраст")
     return
 
-  id = ''.join(random.choices(digits, k=6))
+  id = ''.join(choices(digits, k=5))
 
-  new_user = {
-    "id": id,
-    "name": name,
-    "age": age
-  }
+  new_user = { "id": id, "name": name, "age": age }
 
   users.append(new_user)
 
