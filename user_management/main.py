@@ -1,4 +1,4 @@
-from user_manager import *
+from user_management.user_manager import *
 
 users = []
 
