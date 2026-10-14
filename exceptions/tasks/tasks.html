@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.3.0/github-markdown.min.css" crossorigin="anonymous">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #24292e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .export-container {
+      width: 100%;
+      max-width: 840px;
+      padding: 60px 40px;
+      box-sizing: border-box;
+    }
+    @media (max-width: 840px) {
+      .export-container {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="export-container markdown-body">
+    <h2 id="-1-">Задача 1. Ввод возраста при регистрации</h2><p>Вы пишете форму регистрации. Пользователь вводит возраст, и программа должна <strong>переспрашивать</strong>, пока не получит нормальное значение.</p>
+<p>Требования:</p>
+<ul>
+<li>если ввели не число (<code>"двадцать"</code>, <code>"abc"</code>), выведите «Введите число цифрами» и спросите снова;</li><li>если число меньше 0 или больше 120, выведите «Некорректный возраст» и спросите снова;</li><li>когда возраст корректный, выведите «Регистрация продолжена, возраст: N».</li></ul>
+<p>Пример работы:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">code</span><button class="mv-code-copy-btn" data-code="Введите возраст: abc
+Введите число цифрами
+Введите возраст: -3
+Некорректный возраст
+Введите возраст: 25
+Регистрация продолжена, возраст: 25" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs">Введите возраст: abc
+Введите число цифрами
+Введите возраст: -3
+Некорректный возраст
+Введите возраст: 25
+Регистрация продолжена, возраст: 25</code></pre></div><blockquote>
+<p>Подсказка: понадобятся <code>while True</code>, <code>try/except ValueError</code> и <code>break</code>.</p>
+</blockquote>
+<details>
+<summary><b>Показать решение</b></summary>
+
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="while True:
+    try:
+        age = int(input(&quot;Введите возраст: &quot;))
+    except ValueError:
+        print(&quot;Введите число цифрами&quot;)
+        continue  # возвращаемся в начало цикла и спрашиваем снова
+
+    if age &lt; 0 or age &gt; 120:
+        print(&quot;Некорректный возраст&quot;)
+        continue
+
+    break  # сюда попадаем только с корректным возрастом
+
+print(f&quot;Регистрация продолжена, возраст: {age}&quot;)" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python"><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+    <span class="hljs-keyword">try</span>:
+        age = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">"Введите возраст: "</span>))
+    <span class="hljs-keyword">except</span> ValueError:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"Введите число цифрами"</span>)
+        <span class="hljs-keyword">continue</span>  <span class="hljs-comment"># возвращаемся в начало цикла и спрашиваем снова</span>
+
+    <span class="hljs-keyword">if</span> age &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> age &gt; <span class="hljs-number">120</span>:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"Некорректный возраст"</span>)
+        <span class="hljs-keyword">continue</span>
+
+    <span class="hljs-keyword">break</span>  <span class="hljs-comment"># сюда попадаем только с корректным возрастом</span>
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"Регистрация продолжена, возраст: <span class="hljs-subst">{age}</span>"</span>)</code></pre></div><p><strong>Разбор:</strong></p>
+<ul>
+<li>В <code>try</code> лежит только одна строка, которая реально может упасть (<code>int(...)</code>). Проверка диапазона вынесена наружу, потому что это обычная логика, а не исключение.</li><li><code>continue</code> внутри <code>except</code> нужен обязательно. Без него код пошёл бы дальше, к <code>if age &lt; 0</code>, а переменной <code>age</code> не существует, потому что <code>int()</code> упал.</li></ul>
+</details>
+
+<hr>
+<h2 id="-2-">Задача 2. Корзина интернет-магазина</h2><p>Есть каталог с ценами и корзина пользователя:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="PRICES = {&quot;хлеб&quot;: 50, &quot;молоко&quot;: 90, &quot;сыр&quot;: 400}
+
+cart = [
+    {&quot;item&quot;: &quot;хлеб&quot;, &quot;qty&quot;: &quot;2&quot;},
+    {&quot;item&quot;: &quot;молоко&quot;, &quot;qty&quot;: &quot;1&quot;},
+    {&quot;item&quot;: &quot;колбаса&quot;, &quot;qty&quot;: &quot;1&quot;},
+    {&quot;item&quot;: &quot;сыр&quot;, &quot;qty&quot;: &quot;много&quot;},
+    {&quot;item&quot;: &quot;сыр&quot;, &quot;qty&quot;: &quot;3&quot;},
+]" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python">PRICES = {<span class="hljs-string">"хлеб"</span>: <span class="hljs-number">50</span>, <span class="hljs-string">"молоко"</span>: <span class="hljs-number">90</span>, <span class="hljs-string">"сыр"</span>: <span class="hljs-number">400</span>}
+
+cart = [
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"хлеб"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"2"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"молоко"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"1"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"колбаса"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"1"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"сыр"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"много"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"сыр"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"3"</span>},
+]</code></pre></div><p>Напишите функцию <code>calculate_total(cart)</code>, которая считает итоговую сумму заказа. Позиции с ошибками она <strong>пропускает</strong> и сообщает, что не так.</p>
+<p>Ожидаемый вывод:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">code</span><button class="mv-code-copy-btn" data-code="Товар 'колбаса' не найден в каталоге — пропущен
+Некорректное количество у 'сыр': 'много' — пропущен
+Итого: 1390" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs">Товар <span class="hljs-string">'колбаса'</span> не найден в каталоге — пропущен
+Некорректное количество у <span class="hljs-string">'сыр'</span>: <span class="hljs-string">'много'</span> — пропущен
+Итого: <span class="hljs-number">1390</span></code></pre></div><blockquote>
+<p>💡 Подсказка: здесь возникнут два разных типа ошибок, и каждый нужно ловить отдельно. Подумайте, какие именно.</p>
+</blockquote>
+<details>
+<summary><b>Показать решение</b></summary>
+
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="PRICES = {&quot;хлеб&quot;: 50, &quot;молоко&quot;: 90, &quot;сыр&quot;: 400}
+
+cart = [
+    {&quot;item&quot;: &quot;хлеб&quot;, &quot;qty&quot;: &quot;2&quot;},
+    {&quot;item&quot;: &quot;молоко&quot;, &quot;qty&quot;: &quot;1&quot;},
+    {&quot;item&quot;: &quot;колбаса&quot;, &quot;qty&quot;: &quot;1&quot;},
+    {&quot;item&quot;: &quot;сыр&quot;, &quot;qty&quot;: &quot;много&quot;},
+    {&quot;item&quot;: &quot;сыр&quot;, &quot;qty&quot;: &quot;3&quot;},
+]
+
+
+def calculate_total(cart):
+    total = 0
+    for position in cart:
+        name = position[&quot;item&quot;]
+        qty_text = position[&quot;qty&quot;]
+
+        try:
+            price = PRICES[name]   # может упасть с KeyError
+            qty = int(qty_text)    # может упасть с ValueError
+        except KeyError:
+            print(f&quot;Товар '{name}' не найден в каталоге — пропущен&quot;)
+        except ValueError:
+            print(f&quot;Некорректное количество у '{name}': '{qty_text}' — пропущен&quot;)
+        else:
+            # выполняется только если в try не было ошибки
+            total += price * qty
+
+    return total
+
+
+print(&quot;Итого:&quot;, calculate_total(cart))" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python">PRICES = {<span class="hljs-string">"хлеб"</span>: <span class="hljs-number">50</span>, <span class="hljs-string">"молоко"</span>: <span class="hljs-number">90</span>, <span class="hljs-string">"сыр"</span>: <span class="hljs-number">400</span>}
+
+cart = [
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"хлеб"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"2"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"молоко"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"1"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"колбаса"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"1"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"сыр"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"много"</span>},
+    {<span class="hljs-string">"item"</span>: <span class="hljs-string">"сыр"</span>, <span class="hljs-string">"qty"</span>: <span class="hljs-string">"3"</span>},
+]
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_total</span>(<span class="hljs-params">cart</span>):
+    total = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> position <span class="hljs-keyword">in</span> cart:
+        name = position[<span class="hljs-string">"item"</span>]
+        qty_text = position[<span class="hljs-string">"qty"</span>]
+
+        <span class="hljs-keyword">try</span>:
+            price = PRICES[name]   <span class="hljs-comment"># может упасть с KeyError</span>
+            qty = <span class="hljs-built_in">int</span>(qty_text)    <span class="hljs-comment"># может упасть с ValueError</span>
+        <span class="hljs-keyword">except</span> KeyError:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Товар '<span class="hljs-subst">{name}</span>' не найден в каталоге — пропущен"</span>)
+        <span class="hljs-keyword">except</span> ValueError:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Некорректное количество у '<span class="hljs-subst">{name}</span>': '<span class="hljs-subst">{qty_text}</span>' — пропущен"</span>)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-comment"># выполняется только если в try не было ошибки</span>
+            total += price * qty
+
+    <span class="hljs-keyword">return</span> total
+
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"Итого:"</span>, calculate_total(cart))</code></pre></div><p><strong>Разбор:</strong></p>
+<ul>
+<li><code>KeyError</code> возникает, когда товара нет в словаре <code>PRICES</code>, а <code>ValueError</code> — когда <code>int()</code> не может превратить строку в число.</li><li>Сумма прибавляется в <code>else</code>, чтобы это происходило только при успешном разборе позиции.</li><li>Ошибки обрабатываются <strong>внутри цикла</strong>, поэтому одна плохая позиция не ломает подсчёт всей корзины. Если бы <code>try</code> стоял вокруг всего цикла, после первой ошибки подсчёт бы просто остановился.</li></ul>
+</details>
+
+<hr>
+<h2 id="-3-">Задача 3. Валидатор пароля</h2><p>Напишите функцию <code>validate_password(password)</code>, которая <strong>выбрасывает <code>ValueError</code></strong> с понятным сообщением, если:</p>
+<ul>
+<li>пароль короче 8 символов;</li><li>в нём нет ни одной цифры;</li><li>в нём нет ни одной заглавной буквы.</li></ul>
+<p>Если всё хорошо, функция возвращает <code>True</code>.</p>
+<p>Затем проверьте список паролей:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="passwords = [&quot;123&quot;, &quot;password&quot;, &quot;Password&quot;, &quot;Password1&quot;]" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python">passwords = [<span class="hljs-string">"123"</span>, <span class="hljs-string">"password"</span>, <span class="hljs-string">"Password"</span>, <span class="hljs-string">"Password1"</span>]</code></pre></div><p>Ожидаемый вывод:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">code</span><button class="mv-code-copy-btn" data-code="'123': пароль короче 8 символов
+'password': нет ни одной цифры
+'Password': нет ни одной цифры
+'Password1': ок" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs"><span class="hljs-string">'123'</span>: пароль короче <span class="hljs-number">8</span> символов
+<span class="hljs-string">'password'</span>: нет ни одной цифры
+<span class="hljs-string">'Password'</span>: нет ни одной цифры
+<span class="hljs-string">'Password1'</span>: ок</code></pre></div><blockquote>
+<p>💡 Подсказка: сама <code>validate_password</code> ничего не печатает, она только делает <code>raise ValueError("...")</code>. Печатает тот, кто её вызвал, в блоке <code>except ValueError as e</code>.</p>
+</blockquote>
+<details>
+<summary><b>Показать решение</b></summary>
+
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="def validate_password(password):
+    if len(password) &lt; 8:
+        raise ValueError(&quot;пароль короче 8 символов&quot;)
+
+    has_digit = False
+    has_upper = False
+    for ch in password:
+        if ch.isdigit():
+            has_digit = True
+        if ch.isupper():
+            has_upper = True
+
+    if not has_digit:
+        raise ValueError(&quot;нет ни одной цифры&quot;)
+    if not has_upper:
+        raise ValueError(&quot;нет ни одной заглавной буквы&quot;)
+
+    return True
+
+
+passwords = [&quot;123&quot;, &quot;password&quot;, &quot;Password&quot;, &quot;Password1&quot;]
+
+for pwd in passwords:
+    try:
+        validate_password(pwd)
+    except ValueError as e:
+        print(f&quot;'{pwd}': {e}&quot;)
+    else:
+        print(f&quot;'{pwd}': ок&quot;)" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">validate_password</span>(<span class="hljs-params">password</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(password) &lt; <span class="hljs-number">8</span>:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"пароль короче 8 символов"</span>)
+
+    has_digit = <span class="hljs-literal">False</span>
+    has_upper = <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> password:
+        <span class="hljs-keyword">if</span> ch.isdigit():
+            has_digit = <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">if</span> ch.isupper():
+            has_upper = <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> has_digit:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"нет ни одной цифры"</span>)
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> has_upper:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"нет ни одной заглавной буквы"</span>)
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+
+passwords = [<span class="hljs-string">"123"</span>, <span class="hljs-string">"password"</span>, <span class="hljs-string">"Password"</span>, <span class="hljs-string">"Password1"</span>]
+
+<span class="hljs-keyword">for</span> pwd <span class="hljs-keyword">in</span> passwords:
+    <span class="hljs-keyword">try</span>:
+        validate_password(pwd)
+    <span class="hljs-keyword">except</span> ValueError <span class="hljs-keyword">as</span> e:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"'<span class="hljs-subst">{pwd}</span>': <span class="hljs-subst">{e}</span>"</span>)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"'<span class="hljs-subst">{pwd}</span>': ок"</span>)</code></pre></div><p><strong>Разбор:</strong></p>
+<ul>
+<li><code>raise</code> сразу останавливает функцию, поэтому после первой найденной проблемы остальные проверки не выполняются.</li><li>Функция <strong>сообщает</strong> о проблеме, а <strong>решает</strong>, что с ней делать, вызывающий код. Эту же функцию можно использовать и в консольной программе, и на сайте, и в телеграм-боте, меняя только обработку в <code>except</code>.</li><li>Короткий вариант проверки, если уже знакомы с <code>any</code>:
+<code>has_digit = any(ch.isdigit() for ch in password)</code>.</li></ul>
+</details>
+
+<hr>
+<h2 id="-4-">Задача 4. Загрузка конфига приложения</h2><p>Создайте рядом со скриптом файл <code>config.json</code>:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">json</span><button class="mv-code-copy-btn" data-code="{&quot;host&quot;: &quot;localhost&quot;, &quot;port&quot;: &quot;8080&quot;, &quot;debug&quot;: true}" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"host"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"localhost"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"port"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"8080"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"debug"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">}</span></code></pre></div><p>Напишите функцию <code>load_config(path)</code>, которая читает файл и возвращает словарь, где <code>port</code> уже превращён в <code>int</code>.</p>
+<p>Если что-то не так, функция выбрасывает <strong><code>ValueError</code> с понятным текстом</strong>, используя <code>raise ... from e</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Ситуация</th>
+<th>Сообщение</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>файла нет</td>
+<td><code>Файл настроек не найден: config.json</code></td>
+</tr>
+<tr>
+<td>файл не является корректным JSON</td>
+<td><code>Файл настроек повреждён</code></td>
+</tr>
+<tr>
+<td>нет ключа <code>port</code></td>
+<td><code>В настройках нет параметра port</code></td>
+</tr>
+<tr>
+<td><code>port</code> не число</td>
+<td><code>port должен быть числом</code></td>
+</tr>
+</tbody></table>
+<p>В <code>main()</code> поймайте <code>ValueError</code>, выведите сообщение и запустите «приложение» с настройками по умолчанию:
+<code>{"host": "localhost", "port": 8000, "debug": False}</code>.</p>
+<p>Проверьте все 4 случая, по очереди портя файл.</p>
+<blockquote>
+<p>Подсказка: суть задачи в том, чтобы превратить четыре разные технические ошибки (<code>FileNotFoundError</code>, <code>json.JSONDecodeError</code>, <code>KeyError</code>, <code>ValueError</code>) в одну понятную. Тогда <code>main()</code> нужно ловить только один тип ошибки.</p>
+</blockquote>
+<details>
+<summary><b>Показать решение</b></summary>
+
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="import json
+
+DEFAULT_CONFIG = {&quot;host&quot;: &quot;localhost&quot;, &quot;port&quot;: 8000, &quot;debug&quot;: False}
+
+
+def load_config(path):
+    # Шаг 1: прочитать файл
+    try:
+        with open(path, encoding=&quot;utf-8&quot;) as f:
+            config = json.load(f)
+    except FileNotFoundError as e:
+        raise ValueError(f&quot;Файл настроек не найден: {path}&quot;) from e
+    except json.JSONDecodeError as e:
+        raise ValueError(&quot;Файл настроек повреждён&quot;) from e
+
+    # Шаг 2: проверить и преобразовать port
+    try:
+        config[&quot;port&quot;] = int(config[&quot;port&quot;])
+    except KeyError as e:
+        raise ValueError(&quot;В настройках нет параметра port&quot;) from e
+    except (ValueError, TypeError) as e:
+        raise ValueError(&quot;port должен быть числом&quot;) from e
+
+    return config
+
+
+def main():
+    try:
+        config = load_config(&quot;config.json&quot;)
+    except ValueError as e:
+        print(&quot;Ошибка конфигурации:&quot;, e)
+        print(&quot;Запускаю с настройками по умолчанию&quot;)
+        config = DEFAULT_CONFIG
+
+    print(f&quot;Сервер запущен на {config['host']}:{config['port']}&quot;)
+
+
+main()" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python"><span class="hljs-keyword">import</span> json
+
+DEFAULT_CONFIG = {<span class="hljs-string">"host"</span>: <span class="hljs-string">"localhost"</span>, <span class="hljs-string">"port"</span>: <span class="hljs-number">8000</span>, <span class="hljs-string">"debug"</span>: <span class="hljs-literal">False</span>}
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">load_config</span>(<span class="hljs-params">path</span>):
+    <span class="hljs-comment"># Шаг 1: прочитать файл</span>
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(path, encoding=<span class="hljs-string">"utf-8"</span>) <span class="hljs-keyword">as</span> f:
+            config = json.load(f)
+    <span class="hljs-keyword">except</span> FileNotFoundError <span class="hljs-keyword">as</span> e:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f"Файл настроек не найден: <span class="hljs-subst">{path}</span>"</span>) <span class="hljs-keyword">from</span> e
+    <span class="hljs-keyword">except</span> json.JSONDecodeError <span class="hljs-keyword">as</span> e:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"Файл настроек повреждён"</span>) <span class="hljs-keyword">from</span> e
+
+    <span class="hljs-comment"># Шаг 2: проверить и преобразовать port</span>
+    <span class="hljs-keyword">try</span>:
+        config[<span class="hljs-string">"port"</span>] = <span class="hljs-built_in">int</span>(config[<span class="hljs-string">"port"</span>])
+    <span class="hljs-keyword">except</span> KeyError <span class="hljs-keyword">as</span> e:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"В настройках нет параметра port"</span>) <span class="hljs-keyword">from</span> e
+    <span class="hljs-keyword">except</span> (ValueError, TypeError) <span class="hljs-keyword">as</span> e:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"port должен быть числом"</span>) <span class="hljs-keyword">from</span> e
+
+    <span class="hljs-keyword">return</span> config
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():
+    <span class="hljs-keyword">try</span>:
+        config = load_config(<span class="hljs-string">"config.json"</span>)
+    <span class="hljs-keyword">except</span> ValueError <span class="hljs-keyword">as</span> e:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"Ошибка конфигурации:"</span>, e)
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"Запускаю с настройками по умолчанию"</span>)
+        config = DEFAULT_CONFIG
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Сервер запущен на <span class="hljs-subst">{config[<span class="hljs-string">'host'</span>]}</span>:<span class="hljs-subst">{config[<span class="hljs-string">'port'</span>]}</span>"</span>)
+
+
+main()</code></pre></div><p><strong>Как проверить все случаи:</strong></p>
+<ol>
+<li>Переименуйте <code>config.json</code> → «файл не найден».</li><li>Удалите закрывающую скобку <code>}</code> → «файл повреждён».</li><li>Удалите <code>"port": "8080",</code> → «нет параметра port».</li><li>Замените <code>"8080"</code> на <code>"abc"</code> → «port должен быть числом».</li></ol>
+<p><strong>Разбор:</strong></p>
+<ul>
+<li><code>from e</code> сохраняет исходную ошибку: при отладке в traceback будет видна и настоящая причина, и ваше понятное сообщение.</li><li><code>TypeError</code> тоже ловится, потому что <code>int(None)</code> или <code>int([1, 2])</code> падают именно с ним, а в JSON вместо строки могут положить <code>null</code> или список.</li><li>Тонкость: <code>json.JSONDecodeError</code> является наследником <code>ValueError</code>. Поэтому без перехвата внутри <code>load_config</code> он всё равно поймался бы в <code>main()</code>, но с непонятным техническим текстом. Именно для этого мы и заменяем его своим сообщением.</li><li>Чтение файла и проверка <code>port</code> разнесены по двум <code>try</code>. Так каждый <code>try</code> маленький, и сразу понятно, какая строка может упасть.</li></ul>
+</details>
+
+<hr>
+<h2 id="-5-">Задача 5. Перевод денег между счетами</h2><div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="accounts = {&quot;alice&quot;: 1000, &quot;bob&quot;: 500}" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python">accounts = {<span class="hljs-string">"alice"</span>: <span class="hljs-number">1000</span>, <span class="hljs-string">"bob"</span>: <span class="hljs-number">500</span>}</code></pre></div><ol>
+<li>Напишите <code>transfer(from_user, to_user, amount)</code>, которая:<ul>
+<li>выбрасывает <code>KeyError("Счёт не найден: имя")</code>, если любого из пользователей нет;</li><li>выбрасывает <code>ValueError("Сумма должна быть больше нуля")</code>, если <code>amount &lt;= 0</code>;</li><li>выбрасывает <code>ValueError("Недостаточно средств")</code>, если денег не хватает;</li><li>иначе переводит деньги.</li></ul>
+</li><li>Напишите обёртку <code>safe_transfer(from_user, to_user, amount)</code>, которая вызывает <code>transfer</code>, при <strong>любой</strong> ошибке (<code>KeyError</code> или <code>ValueError</code>) пишет в «журнал» строку
+<code>[ЛОГ] Неудачный перевод alice → bob: &lt;текст ошибки&gt;</code>
+и <strong>пробрасывает ошибку дальше</strong> голым <code>raise</code>.</li><li>В <code>main()</code> выполните несколько переводов, включая ошибочные, и ловите <code>KeyError</code> и <code>ValueError</code> <strong>отдельно</strong>, с разными сообщениями пользователю.</li></ol>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="safe_transfer(&quot;alice&quot;, &quot;bob&quot;, 300)     # успешно
+safe_transfer(&quot;alice&quot;, &quot;carl&quot;, 100)    # нет такого счёта
+safe_transfer(&quot;bob&quot;, &quot;alice&quot;, 5000)    # не хватает денег
+safe_transfer(&quot;alice&quot;, &quot;bob&quot;, -50)     # отрицательная сумма" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python">safe_transfer(<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>, <span class="hljs-number">300</span>)     <span class="hljs-comment"># успешно</span>
+safe_transfer(<span class="hljs-string">"alice"</span>, <span class="hljs-string">"carl"</span>, <span class="hljs-number">100</span>)    <span class="hljs-comment"># нет такого счёта</span>
+safe_transfer(<span class="hljs-string">"bob"</span>, <span class="hljs-string">"alice"</span>, <span class="hljs-number">5000</span>)    <span class="hljs-comment"># не хватает денег</span>
+safe_transfer(<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>, -<span class="hljs-number">50</span>)     <span class="hljs-comment"># отрицательная сумма</span></code></pre></div><p>В конце выведите итоговые балансы и проверьте, что после неудачных переводов они не изменились.</p>
+<p><strong>Звёздочка сверху:</strong> представьте, что деньги уже списались с отправителя, а при зачислении получателю произошла ошибка. Сделайте так, чтобы в этом случае списание откатывалось.</p>
+<details>
+<summary><b>Показать решение (основная часть)</b></summary>
+
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="accounts = {&quot;alice&quot;: 1000, &quot;bob&quot;: 500}
+
+
+def transfer(from_user, to_user, amount):
+    if from_user not in accounts:
+        raise KeyError(f&quot;Счёт не найден: {from_user}&quot;)
+    if to_user not in accounts:
+        raise KeyError(f&quot;Счёт не найден: {to_user}&quot;)
+    if amount &lt;= 0:
+        raise ValueError(&quot;Сумма должна быть больше нуля&quot;)
+    if accounts[from_user] &lt; amount:
+        raise ValueError(&quot;Недостаточно средств&quot;)
+
+    accounts[from_user] -= amount
+    accounts[to_user] += amount
+
+
+def safe_transfer(from_user, to_user, amount):
+    try:
+        transfer(from_user, to_user, amount)
+    except (KeyError, ValueError) as e:
+        print(f&quot;[ЛОГ] Неудачный перевод {from_user} → {to_user}: {e.args[0]}&quot;)
+        raise  # записали в журнал, а решать, что делать, будет main()
+
+
+def main():
+    transfers = [
+        (&quot;alice&quot;, &quot;bob&quot;, 300),
+        (&quot;alice&quot;, &quot;carl&quot;, 100),
+        (&quot;bob&quot;, &quot;alice&quot;, 5000),
+        (&quot;alice&quot;, &quot;bob&quot;, -50),
+    ]
+
+    for from_user, to_user, amount in transfers:
+        try:
+            safe_transfer(from_user, to_user, amount)
+        except KeyError as e:
+            print(&quot;Ошибка: проверьте данные получателя —&quot;, e.args[0])
+        except ValueError as e:
+            print(&quot;Перевод отклонён —&quot;, e)
+        else:
+            print(f&quot;Перевод {amount} от {from_user} к {to_user} выполнен&quot;)
+        print()
+
+    print(&quot;Итоговые балансы:&quot;, accounts)
+
+
+main()" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python">accounts = {<span class="hljs-string">"alice"</span>: <span class="hljs-number">1000</span>, <span class="hljs-string">"bob"</span>: <span class="hljs-number">500</span>}
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">transfer</span>(<span class="hljs-params">from_user, to_user, amount</span>):
+    <span class="hljs-keyword">if</span> from_user <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> accounts:
+        <span class="hljs-keyword">raise</span> KeyError(<span class="hljs-string">f"Счёт не найден: <span class="hljs-subst">{from_user}</span>"</span>)
+    <span class="hljs-keyword">if</span> to_user <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> accounts:
+        <span class="hljs-keyword">raise</span> KeyError(<span class="hljs-string">f"Счёт не найден: <span class="hljs-subst">{to_user}</span>"</span>)
+    <span class="hljs-keyword">if</span> amount &lt;= <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"Сумма должна быть больше нуля"</span>)
+    <span class="hljs-keyword">if</span> accounts[from_user] &lt; amount:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"Недостаточно средств"</span>)
+
+    accounts[from_user] -= amount
+    accounts[to_user] += amount
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">safe_transfer</span>(<span class="hljs-params">from_user, to_user, amount</span>):
+    <span class="hljs-keyword">try</span>:
+        transfer(from_user, to_user, amount)
+    <span class="hljs-keyword">except</span> (KeyError, ValueError) <span class="hljs-keyword">as</span> e:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"[ЛОГ] Неудачный перевод <span class="hljs-subst">{from_user}</span> → <span class="hljs-subst">{to_user}</span>: <span class="hljs-subst">{e.args[<span class="hljs-number">0</span>]}</span>"</span>)
+        <span class="hljs-keyword">raise</span>  <span class="hljs-comment"># записали в журнал, а решать, что делать, будет main()</span>
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():
+    transfers = [
+        (<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>, <span class="hljs-number">300</span>),
+        (<span class="hljs-string">"alice"</span>, <span class="hljs-string">"carl"</span>, <span class="hljs-number">100</span>),
+        (<span class="hljs-string">"bob"</span>, <span class="hljs-string">"alice"</span>, <span class="hljs-number">5000</span>),
+        (<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>, -<span class="hljs-number">50</span>),
+    ]
+
+    <span class="hljs-keyword">for</span> from_user, to_user, amount <span class="hljs-keyword">in</span> transfers:
+        <span class="hljs-keyword">try</span>:
+            safe_transfer(from_user, to_user, amount)
+        <span class="hljs-keyword">except</span> KeyError <span class="hljs-keyword">as</span> e:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">"Ошибка: проверьте данные получателя —"</span>, e.args[<span class="hljs-number">0</span>])
+        <span class="hljs-keyword">except</span> ValueError <span class="hljs-keyword">as</span> e:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">"Перевод отклонён —"</span>, e)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Перевод <span class="hljs-subst">{amount}</span> от <span class="hljs-subst">{from_user}</span> к <span class="hljs-subst">{to_user}</span> выполнен"</span>)
+        <span class="hljs-built_in">print</span>()
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"Итоговые балансы:"</span>, accounts)
+
+
+main()</code></pre></div><p>Вывод:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">code</span><button class="mv-code-copy-btn" data-code="Перевод 300 от alice к bob выполнен
+
+[ЛОГ] Неудачный перевод alice → carl: Счёт не найден: carl
+Ошибка: проверьте данные получателя — Счёт не найден: carl
+
+[ЛОГ] Неудачный перевод bob → alice: Недостаточно средств
+Перевод отклонён — Недостаточно средств
+
+[ЛОГ] Неудачный перевод alice → bob: Сумма должна быть больше нуля
+Перевод отклонён — Сумма должна быть больше нуля
+
+Итоговые балансы: {'alice': 700, 'bob': 800}" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs"><span class="hljs-string">Перевод</span> <span class="hljs-number">300</span> <span class="hljs-string">от</span> <span class="hljs-string">alice</span> <span class="hljs-string">к</span> <span class="hljs-string">bob</span> <span class="hljs-string">выполнен</span>
+
+[<span class="hljs-string">ЛОГ</span>] <span class="hljs-string">Неудачный</span> <span class="hljs-string">перевод</span> <span class="hljs-string">alice</span> <span class="hljs-string">→</span> <span class="hljs-attr">carl:</span> <span class="hljs-string">Счёт</span> <span class="hljs-string">не</span> <span class="hljs-string">найден:</span> <span class="hljs-string">carl</span>
+<span class="hljs-string">Ошибка:</span> <span class="hljs-string">проверьте</span> <span class="hljs-string">данные</span> <span class="hljs-string">получателя</span> <span class="hljs-string">—</span> <span class="hljs-string">Счёт</span> <span class="hljs-string">не</span> <span class="hljs-string">найден:</span> <span class="hljs-string">carl</span>
+
+[<span class="hljs-string">ЛОГ</span>] <span class="hljs-string">Неудачный</span> <span class="hljs-string">перевод</span> <span class="hljs-string">bob</span> <span class="hljs-string">→</span> <span class="hljs-attr">alice:</span> <span class="hljs-string">Недостаточно</span> <span class="hljs-string">средств</span>
+<span class="hljs-string">Перевод</span> <span class="hljs-string">отклонён</span> <span class="hljs-string">—</span> <span class="hljs-string">Недостаточно</span> <span class="hljs-string">средств</span>
+
+[<span class="hljs-string">ЛОГ</span>] <span class="hljs-string">Неудачный</span> <span class="hljs-string">перевод</span> <span class="hljs-string">alice</span> <span class="hljs-string">→</span> <span class="hljs-attr">bob:</span> <span class="hljs-string">Сумма</span> <span class="hljs-string">должна</span> <span class="hljs-string">быть</span> <span class="hljs-string">больше</span> <span class="hljs-string">нуля</span>
+<span class="hljs-string">Перевод</span> <span class="hljs-string">отклонён</span> <span class="hljs-string">—</span> <span class="hljs-string">Сумма</span> <span class="hljs-string">должна</span> <span class="hljs-string">быть</span> <span class="hljs-string">больше</span> <span class="hljs-string">нуля</span>
+
+<span class="hljs-string">Итоговые</span> <span class="hljs-string">балансы:</span> {<span class="hljs-attr">'alice':</span> <span class="hljs-number">700</span>, <span class="hljs-attr">'bob':</span> <span class="hljs-number">800</span>}</code></pre></div><p><strong>Разбор:</strong></p>
+<ul>
+<li>Все проверки идут <strong>до</strong> изменения балансов. Если что-то не так, функция падает раньше, чем успела что-то испортить.</li><li><code>safe_transfer</code> ловит ошибку только для записи в журнал, а голый <code>raise</code> отправляет её дальше. Без него <code>main()</code> думал бы, что перевод прошёл успешно, и напечатал бы «выполнен».</li><li>Почему <code>e.args[0]</code>, а не просто <code>e</code>? У <code>KeyError</code> есть особенность: <code>str(KeyError("текст"))</code> возвращает текст <strong>в кавычках</strong>: <code>'текст'</code>. <code>e.args[0]</code> достаёт исходную строку без кавычек. У <code>ValueError</code> такой проблемы нет.</li></ul>
+</details>
+
+<details>
+<summary><b>Показать решение (звёздочка: откат перевода)</b></summary>
+
+<p>Чтобы смоделировать сбой, вынесем зачисление в отдельную функцию, которая может упасть, например, если «банк получателя недоступен»:</p>
+<div class="mv-code-block has-mac"><div class="mv-code-header"><span class="mv-mac-dots"><i></i><i></i><i></i></span><span class="mv-code-lang">python</span><button class="mv-code-copy-btn" data-code="accounts = {&quot;alice&quot;: 1000, &quot;bob&quot;: 500}
+bank_online = False  # поменяйте на True, чтобы переводы проходили
+
+
+def credit(user, amount):
+    &quot;&quot;&quot;Зачисление денег. Может упасть из-за сбоя связи.&quot;&quot;&quot;
+    if not bank_online:
+        raise ConnectionError(&quot;Банк получателя недоступен&quot;)
+    accounts[user] += amount
+
+
+def transfer(from_user, to_user, amount):
+    if from_user not in accounts:
+        raise KeyError(f&quot;Счёт не найден: {from_user}&quot;)
+    if to_user not in accounts:
+        raise KeyError(f&quot;Счёт не найден: {to_user}&quot;)
+    if amount &lt;= 0:
+        raise ValueError(&quot;Сумма должна быть больше нуля&quot;)
+    if accounts[from_user] &lt; amount:
+        raise ValueError(&quot;Недостаточно средств&quot;)
+
+    accounts[from_user] -= amount  # списали
+    try:
+        credit(to_user, amount)    # пытаемся зачислить
+    except ConnectionError:
+        accounts[from_user] += amount  # ОТКАТ: возвращаем деньги отправителю
+        raise                          # и пробрасываем ошибку выше
+
+
+try:
+    transfer(&quot;alice&quot;, &quot;bob&quot;, 300)
+except ConnectionError as e:
+    print(&quot;Перевод не выполнен:&quot;, e)
+
+print(&quot;Балансы:&quot;, accounts)  # {'alice': 1000, 'bob': 500} — ничего не потерялось" title="Copy code"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div><pre><code class="hljs python">accounts = {<span class="hljs-string">"alice"</span>: <span class="hljs-number">1000</span>, <span class="hljs-string">"bob"</span>: <span class="hljs-number">500</span>}
+bank_online = <span class="hljs-literal">False</span>  <span class="hljs-comment"># поменяйте на True, чтобы переводы проходили</span>
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">credit</span>(<span class="hljs-params">user, amount</span>):
+    <span class="hljs-string">"""Зачисление денег. Может упасть из-за сбоя связи."""</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> bank_online:
+        <span class="hljs-keyword">raise</span> ConnectionError(<span class="hljs-string">"Банк получателя недоступен"</span>)
+    accounts[user] += amount
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">transfer</span>(<span class="hljs-params">from_user, to_user, amount</span>):
+    <span class="hljs-keyword">if</span> from_user <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> accounts:
+        <span class="hljs-keyword">raise</span> KeyError(<span class="hljs-string">f"Счёт не найден: <span class="hljs-subst">{from_user}</span>"</span>)
+    <span class="hljs-keyword">if</span> to_user <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> accounts:
+        <span class="hljs-keyword">raise</span> KeyError(<span class="hljs-string">f"Счёт не найден: <span class="hljs-subst">{to_user}</span>"</span>)
+    <span class="hljs-keyword">if</span> amount &lt;= <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"Сумма должна быть больше нуля"</span>)
+    <span class="hljs-keyword">if</span> accounts[from_user] &lt; amount:
+        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">"Недостаточно средств"</span>)
+
+    accounts[from_user] -= amount  <span class="hljs-comment"># списали</span>
+    <span class="hljs-keyword">try</span>:
+        credit(to_user, amount)    <span class="hljs-comment"># пытаемся зачислить</span>
+    <span class="hljs-keyword">except</span> ConnectionError:
+        accounts[from_user] += amount  <span class="hljs-comment"># ОТКАТ: возвращаем деньги отправителю</span>
+        <span class="hljs-keyword">raise</span>                          <span class="hljs-comment"># и пробрасываем ошибку выше</span>
+
+
+<span class="hljs-keyword">try</span>:
+    transfer(<span class="hljs-string">"alice"</span>, <span class="hljs-string">"bob"</span>, <span class="hljs-number">300</span>)
+<span class="hljs-keyword">except</span> ConnectionError <span class="hljs-keyword">as</span> e:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">"Перевод не выполнен:"</span>, e)
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"Балансы:"</span>, accounts)  <span class="hljs-comment"># {'alice': 1000, 'bob': 500} — ничего не потерялось</span></code></pre></div><p><strong>Разбор:</strong></p>
+<ul>
+<li>Это классический паттерн <strong>«поймал → откатил → пробросил»</strong>. Функция <code>transfer</code> не знает, что делать со сбоем связи (повторить позже? сообщить пользователю?), но знает, что <strong>за собой нужно прибраться</strong>. Поэтому она откатывает списание и отдаёт ошибку наверх голым <code>raise</code>.</li><li>Без отката у alice списались бы 300, а bob их не получил бы. Деньги просто исчезли бы.</li><li>В реальных системах этим занимаются транзакции базы данных (<code>commit</code> / <code>rollback</code>), но принцип тот же самый.</li><li>Если хотите, чтобы <code>safe_transfer</code> из основной части тоже логировал этот случай, добавьте <code>ConnectionError</code> в кортеж: <code>except (KeyError, ValueError, ConnectionError) as e:</code>.</li></ul>
+</details>
+
+  </div>
+</body>
+</html>
