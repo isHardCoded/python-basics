@@ -21,6 +21,10 @@ class Rectangle:
   def perimeter(self):
     return 2 * (self.height + self.width)
 
+  @property
   def scale(self, factor):
     self.width *= factor
     self.height *= factor
+
+rect = Rectangle(20, 20)
+print(rect.area)
